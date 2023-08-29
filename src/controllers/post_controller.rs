@@ -5,8 +5,21 @@ use rocket::serde::json::Json;
 use crate::models::post::Post;
 
 pub fn get_all_posts() -> Json<Vec<Post>> {
-    // Implement your get_all_posts logic here
-    Json(vec![])
+    let example_posts = vec![
+        // Example posts
+        Post {
+            id: 1,
+            title: "Example Post 1".to_string(),
+            content: "This is the content of example post 1.".to_string(),
+        },
+        Post {
+            id: 2,
+            title: "Example Post 2".to_string(),
+            content: "This is the content of example post 2.".to_string(),
+        }
+    ];
+
+    Json(example_posts)
 }
 
 pub fn get_post(post_id: i32) -> Option<Json<Post>> {
