@@ -1,4 +1,6 @@
+use rocket::http::Status;
 use rocket::Route;
+use rocket::data::Data;
 use rocket::serde::json::Json;
 
 use crate::controllers::post_controller;
@@ -8,9 +10,9 @@ pub fn routes() -> Vec<Route> {
     routes![create_post, get_post, get_all_posts]
 }
 
-#[post("/", data = "<post>")]
-pub fn create_post(post: Json<Post>) -> Result<rocket::http::Status, rocket::http::Status> {
-    post_controller::create_post(post.into_inner())
+#[post("/", data = "<_post>")]
+pub async fn create_post(_post: Data<'_>) -> Result<Status, Status> {
+    post_controller::create_post(_post).await
 }
 
 #[get("/<post_id>")]

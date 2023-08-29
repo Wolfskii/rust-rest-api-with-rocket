@@ -1,30 +1,20 @@
 use rocket::http::Status;
-use rocket::get;
-use rocket::post;
-use rocket::Data;
-use rocket::tokio::io::AsyncReadExt;
+use rocket::data::Data;
 use rocket::serde::json::Json;
 
 use crate::models::post::Post;
 
-// ... other imports
-
-pub async fn create_post(post: Data<'_>) -> Result<Status, Status> {
-    // ... existing code ...
-
+pub async fn create_post(_post: Data<'_>) -> Result<Status, Status> {
+    // Implement your create_post logic here
     Ok(Status::Created)
 }
 
 pub fn get_post(post_id: i32) -> Option<Json<Post>> {
-    let post = // Retrieve the post from the database by post_id
-    match post {
-        Some(post) => Some(Json(post)),
-        None => None,
-    };
+    // Implement your get_post logic here
+    None
 }
 
 pub fn get_all_posts() -> Json<Vec<Post>> {
-    let posts = Json(posts);
+    // Implement your get_all_posts logic here
+    Json(vec![])
 }
-
-// ... other controller functions ...

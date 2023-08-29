@@ -1,6 +1,8 @@
 #[macro_use] extern crate rocket;
 
 mod routes;
+mod models;
+mod controllers;
 
 #[launch]
 fn rocket() -> _ {
