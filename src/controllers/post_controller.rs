@@ -22,7 +22,7 @@ pub fn get_all_posts() -> Json<Vec<Post>> {
     Json(example_posts)
 }
 
-pub fn get_post(post_id: i32) -> Option<Json<Post>> {
+pub fn get_post(_post_id: i32) -> Option<Json<Post>> {
     // Implement your get_post logic here
     None
 }

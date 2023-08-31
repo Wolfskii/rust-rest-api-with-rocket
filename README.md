@@ -12,6 +12,10 @@ cargo run
 
 cargo build
 
+### To build for release
+
+cargo build --release
+
 ### Test API-endpoint
 
 curl -X GET http://localhost:4000/api/users

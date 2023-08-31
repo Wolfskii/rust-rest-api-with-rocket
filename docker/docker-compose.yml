@@ -1,0 +1,35 @@
+version: '3'
+services:
+  sql-server:
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      SA_PASSWORD: "YourStrong!Passw0rd"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    networks:
+      - api-network
+      
+  rust-app:
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile
+    environment:  # Section for setting environment variables
+      DATABASE_URL: "your_database_url_here"  # Replace with your actual database URL
+    ports:
+      - "8000:8000"
+    networks:
+      - api-network
+      
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: sql-server
+      PMA_PORT: 1433
+    ports:
+      - "8080:80"
+    networks:
+      - api-network
+networks:
+  api-network:
+    driver: bridge

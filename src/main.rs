@@ -8,9 +8,10 @@ mod controllers;
 
 #[launch]
 fn rocket() -> _ {
-        dotenv().ok();
-        let database_url = env::var("DATABASE_URL").expect("DATABASE_URL not set");
+    dotenv().ok();
+    let _database_url = env::var("DATABASE_URL").expect("DATABASE_URL not set");
 
-        rocket::build()
+    rocket::build()
         .mount("/api/posts", routes::post_routes::routes())
 }
+
