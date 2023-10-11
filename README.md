@@ -19,3 +19,9 @@ cargo build --release
 ### Test API-endpoint
 
 curl -X GET http://localhost:4000/api/users
+
+### Docker commands
+
+docker build .
+
+docker compose up

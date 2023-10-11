@@ -15,8 +15,8 @@ services:
     depends_on:
       - db
     build:
-      context: ..
-      dockerfile: ./docker/Dockerfile
+      context: .
+      dockerfile: ./Dockerfile
     environment:  # Section for setting environment variables
       MY_SECRET: "your_secret_here"
     ports:
