@@ -1,17 +1,20 @@
-#[macro_use] extern crate rocket;
-use dotenv::dotenv;
-use std::env;
+#[macro_use]
+extern crate rocket;
+use tokio;
 
+mod db;
 mod routes;
 mod models;
 mod controllers;
 
 #[launch]
 fn rocket() -> _ {
-    dotenv().ok();
-    let _database_url = env::var("DATABASE_URL").expect("DATABASE_URL not set");
+    let pool = tokio::runtime::Runtime::new()
+        .unwrap()
+        .block_on(db::init_pool())
+        .expect("Failed to create database pool");
 
     rocket::build()
+        .manage(pool)
         .mount("/api/posts", routes::post_routes::routes())
 }
-
