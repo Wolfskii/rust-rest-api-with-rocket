@@ -25,8 +25,8 @@ WORKDIR /usr/src/app
 # Copy only the necessary artifacts from the previous stage
 COPY --from=builder /usr/src/app/target/release/ ./target/release/
 
-ENV RUST_BACKTRACE=full
-ENV DATABASE_URL=mysql://
+ENV ROCKET_ADDRESS=0.0.0.0
+EXPOSE 8000
 
 # Set the entry point
 CMD ["/usr/src/app/target/release/rust-rest-api-with-rocket"]

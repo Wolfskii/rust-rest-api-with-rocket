@@ -10,7 +10,7 @@ services:
       MYSQL_DATABASE: your_mysql_database_name
       MYSQL_USER: your_mysql_user
       MYSQL_PASSWORD: your_mysql_password
-      
+
   rust-app:
     depends_on:
       - db
@@ -18,9 +18,10 @@ services:
       context: .
       dockerfile: ./Dockerfile
     env_file:
-      - .env
+      - docker-example.env
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
+      - "0.0.0.0:8000:8000"
     restart: always
 
   phpmyadmin:
