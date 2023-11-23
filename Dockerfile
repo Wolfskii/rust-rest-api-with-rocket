@@ -1,5 +1,8 @@
 # Use the Rust image as the builder stage
-FROM rust as builder
+FROM rust:1.74-alpine as builder
+
+# Install musl-dev to provide necessary development files
+RUN apk add --no-cache musl-dev
 
 # Create a new directory to work in
 WORKDIR /usr/src/app
@@ -7,23 +10,23 @@ WORKDIR /usr/src/app
 # Copy the Cargo.toml and Cargo.lock files to cache dependencies
 COPY /Cargo.toml /Cargo.lock ./
 
-# Create an empty dummy source file to satisfy the build
-RUN mkdir src && echo "fn main() {}" > src/main.rs
-
-# Build a dummy application to cache dependencies
-RUN cargo build --release
-
-# Remove the dummy source file
-RUN rm -r src
-
 # Copy the rest of the application source code
 COPY ./ ./
 
 # Build the actual application
 RUN cargo build --release
 
-# Use the same Rust builder image for the final runtime image
-FROM builder
+# Start a new stage
+FROM rust:1.74-alpine
+
+# Set the working directory
+WORKDIR /usr/src/app
+
+# Copy only the necessary artifacts from the previous stage
+COPY --from=builder /usr/src/app/target/release/ ./target/release/
+
+ENV RUST_BACKTRACE=full
+ENV DATABASE_URL=mysql://
 
 # Set the entry point
-CMD ["target/release/rust-rest-api-with-rocket"]
+CMD ["/usr/src/app/target/release/rust-rest-api-with-rocket"]

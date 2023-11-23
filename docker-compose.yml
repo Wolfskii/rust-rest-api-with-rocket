@@ -17,8 +17,8 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    environment:  # Section for setting environment variables
-      MY_SECRET: "your_secret_here"
+    env_file:
+      - .env
     ports:
       - "8000:8000"
     restart: always
