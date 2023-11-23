@@ -25,7 +25,7 @@ WORKDIR /usr/src/app
 # Copy only the necessary artifacts from the previous stage
 COPY --from=builder /usr/src/app/target/release/ ./target/release/
 
-ENV ROCKET_ADDRESS=0.0.0.0
+# Expose port
 EXPOSE 8000
 
 # Set the entry point
