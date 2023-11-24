@@ -1,26 +1,27 @@
+// post_routes.rs
+
 use rocket::http::Status;
 use rocket::Route;
-use rocket::data::Data;
 use rocket::serde::json::Json;
-
 use crate::controllers::post_controller;
 use crate::models::post::Post;
+use sqlx::mysql::MySqlPool;
 
 pub fn routes() -> Vec<Route> {
     routes![create_post, get_post, get_all_posts]
 }
 
-#[get("/")]
-pub fn get_all_posts() -> Json<Vec<Post>> {
-    post_controller::get_all_posts()
+#[get("/posts")]
+pub async fn get_all_posts(pool: &rocket::State<MySqlPool>) -> Result<Json<Vec<Post>>, Status> {
+    post_controller::get_all_posts(pool).await
 }
 
-#[get("/<post_id>")]
-pub fn get_post(post_id: i32) -> Option<Json<Post>> {
-    post_controller::get_post(post_id)
+#[get("/posts/<post_id>")]
+pub async fn get_post(pool: &rocket::State<MySqlPool>, post_id: i32) -> Result<Json<Post>, Status> {
+    post_controller::get_post(pool, post_id).await
 }
 
-#[post("/", data = "<_post>")]
-pub async fn create_post(_post: Data<'_>) -> Result<Status, Status> {
-    post_controller::create_post(_post).await
+#[post("/posts", format = "json", data = "<post>")]
+pub async fn create_post(pool: &rocket::State<MySqlPool>, post: Json<Post>) -> Result<Status, Status> {
+    post_controller::create_post(pool, post).await
 }

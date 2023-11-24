@@ -6,7 +6,7 @@
 
 ### To run
 
-cargo run
+cargo run (or with hot reload: cargo watch -x 'run')
 
 ### To build
 

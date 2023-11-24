@@ -16,5 +16,5 @@ fn rocket() -> _ {
 
     rocket::build()
         .manage(pool)
-        .mount("/api/posts", routes::post_routes::routes())
+        .mount("/api", routes::post_routes::routes())
 }
